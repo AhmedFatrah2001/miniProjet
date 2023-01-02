@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <title>home</title>
+    <style>
+        #card{
+            position: absolute;
+            transform: translate(-50%,-50%);
+            left: 50%;
+            top: 60vh;
+            width: 75vw;
+            height: 560px;
+            background-color: rgba(255, 255, 255, 0.562);
+            border-radius: 16px;
+        }
+        #title{
+            text-align: center;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            left: 50%;
+            top: 50%;
+        }
+        #cl{
+            background-color: orange;
+            border: 2px solid white;
+            border-radius: 8px;
+        }
+        #courses{
+            text-align: center;
+        }
+        .imgCourses{
+            width: 50vw;
+            height: auto;
+            margin: auto;
+        }
+        .input-group{
+            width: fit-content;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <div class="btn-group">
+                <input type="button" onclick='window.location.replace("home.html");' class="btn-check" id="btn1">
+                <label class="btn btn-outline-outline" for="btn1">Home</label>
+              
+                <input type="button" onclick=' window.location.replace("courses.html");' class="btn-check" id="bt2">
+                <label class="btn btn-outline-outline" for="bt2">courses</label>
+              
+                <input type="button" onclick=' window.location.replace("about.html");' class="btn-check" id="btn3">
+                <label class="btn btn-outline-outline" for="btn3">About</label>
+              </div>
+        </div>
+    </nav>
+    <div>
+        <img src="monki.jpg" alt="monki" style="width: 100%;">
+        <div id="card">
+            <div id="title">    
+                <h1 style="font-family:'Courier New', Courier, monospace;">sleep(), repeat()</h1>
+                <h3>While you are alive</h3>
+                <input id="cl" type="button" value="COURSES LIST">
+            </div>
+        </div>
+        <div id="courses">
+            <h3><span style="color: orange;">/</span> Courses</h3>
+            <div class="input-group">
+                <button onclick="show.previous()" class="btn btn-info" type="button"><i class="bi bi-arrow-left-square-fill"></i></button>
+                <button onclick="show.next()" class="btn btn-info" type="button"><i class="bi bi-arrow-right-square-fill"></i></button>
+              </div>
+            <div id="imgs">
+            </div>
+        </div>
+</body>
+<script src="courses.js"></script>
+<script>
+    var imagesShow = document.getElementById("imgs");
+    var cl = document.getElementById("cl");
+    cl.addEventListener("click",()=>{
+        window.location.replace("courses.html");
+    })
+    courses.forEach(e => {
+        var img = document.createElement("img");
+        img.className = "imgCourses";
+        img.src = e.image;
+        imagesShow.append(img);
+    });
+    var show = w3.slideshow(".imgCourses",4500);
+
+</script>
+</html>

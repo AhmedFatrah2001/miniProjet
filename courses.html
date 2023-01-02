@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>courses</title>
+    <style>
+        .container {
+            margin-top: 60px;
+        }
+
+        li {
+            cursor: pointer;
+        }
+        .card{
+            height: fit-content;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <div class="btn-group">
+                <input type="button" onclick='window.location.replace("home.html");' class="btn-check" id="btn1">
+                <label class="btn btn-outline-outline" for="btn1">Home</label>
+              
+                <input type="button" onclick=' window.location.replace("courses.html");' class="btn-check" id="bt2">
+                <label class="btn btn-outline-outline" for="bt2">courses</label>
+              
+                <input type="button" onclick=' window.location.replace("about.html");' class="btn-check" id="btn3">
+                <label class="btn btn-outline-outline" for="btn3">About</label>
+              </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col col-2">
+                <input id="search" placeholder="Search..." class="form-control" type="text"><br>
+                <ul id="catList" class="list-group">
+                    <li class="list-group-item">ALL</li>
+                </ul><br>
+                <h3>Price</h3><br>
+                <h5><span id="prc">0</span>$</h5>
+                <input min="0" max="100" type="range" id="rng" class="form-range">
+            </div>
+            <div id="cards" class="col col-9 d-flex flex-wrap justify-content-center">
+
+            </div>
+        </div>
+</body>
+<script src="courses.js"></script>
+<script>
+    var range = document.getElementById('rng');
+    var prc = document.getElementById('prc');
+    var list = document.getElementById('catList');
+    var cardsContainer = document.getElementById('cards');
+    var search = document.getElementById('search');
+    search.addEventListener('keyup', (e) => {
+        cardsContainer.innerHTML = "";
+        courses.forEach((o) => {
+            var title = o.title.toLowerCase()
+            if (title.includes(e.target.value.toLowerCase())) {
+                createCourse(o.image, o.title, o.price);
+            }
+        })
+    })
+    function createCourse(image, title, price) {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'card col-3 me-2 mb-2');
+        let img = document.createElement('img');
+        img.src = image;
+
+        let p = document.createElement('p');
+        p.setAttribute('class', 'card-title');
+        let contenu = document.createTextNode(title);
+        p.appendChild(contenu);
+
+        let span = document.createElement('span');
+        span.setAttribute('class', 'card-text');
+        span.appendChild(document.createTextNode(price + '$'));
+
+        div.appendChild(img);
+        div.appendChild(p);
+        div.appendChild(span);
+        cardsContainer.append(div)
+    }
+    courses.forEach(e => {
+        createCourse(e.image, e.title, e.price)
+    })
+
+    var listItems = document.getElementsByClassName('list-group-item');
+    range.addEventListener("change", (e) => {
+        prc.innerHTML = e.target.value;
+        cardsContainer.innerHTML ="";
+        courses.filter(el => {
+        return el.price <= e.target.value
+    }).forEach((el) => { createCourse(el.image, el.title, el.price) })
+    })
+    var dupCour = [];
+    courses.forEach(e => {
+        dupCour.push(e.category);
+    });
+    uniqueCour = dupCour.filter(function (item, pos) {
+        return dupCour.indexOf(item) == pos;
+    })
+    uniqueCour.forEach(e => {
+        list.innerHTML += '<li class="list-group-item">' + e + '</li>';
+    })
+    for (let item of listItems) {
+        item.addEventListener('click', e => {
+            cardsContainer.innerHTML = '';
+            var cat = e.target.innerHTML;
+            if (cat == "ALL") {
+                courses.filter(o => {
+                    createCourse(o.image, o.title, o.price);
+                });
+
+            }
+            else {
+                courses.forEach((o) => {
+                    if (o.category == cat) {
+                        createCourse(o.image, o.title, o.price);
+                    }
+                })
+            }
+
+        })
+    }
+</script>
+
+</html>

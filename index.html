@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>sign up</title>
+</head>
+<body>
+<section class="text-center text-lg-start">
+    <style>
+      .cascading-right {
+        margin-right: -50px;
+      }
+  
+      @media (max-width: 991.98px) {
+        .cascading-right {
+          margin-right: 0;
+        }
+      }
+    </style>
+  
+    <div class="container py-4">
+      <div class="row g-0 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card cascading-right" style="
+              background: hsla(0, 0%, 100%, 0.55);
+              backdrop-filter: blur(30px);">
+            <div class="card-body p-5 shadow-5 text-center">
+              <h2 class="fw-bold mb-5">Sign up now</h2>
+                <div class="row">
+                    <div class="form-outline mb-4">
+                    <label class="form-label" for="un">User Name</label>
+                      <input type="text" id="un" class="form-control" />
+                  </div>
+                    <div class="form-outline mb-4">
+                    <label class="form-label" for="em">Email Address</label>
+                      <input type="text" id="em" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="pw">Password</label>
+                  <input type="password" id="pw" class="form-control" />
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="cpw">Confirm Password</label>
+                  <input type="password" id="cpw" class="form-control" />
+                </div>
+                <button id="sign" class="btn btn-success">
+                  Sign up 
+                </button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <img src="monki.jpg" class="w-100 rounded-4 shadow-4"
+            alt="monkey" />
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+<script src="users.js"></script>
+<script src="courses.js"></script>
+<script>
+    var eIsValid = false;
+    var pIsValid = false;
+    var un = document.getElementById('un');
+    var em = document.getElementById('em');
+    var pw = document.getElementById('pw');
+    var cpw = document.getElementById('cpw');
+    var sign = document.getElementById('sign');
+    //function that validates the email
+    function validateEmail(email) {
+        const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return res.test(String(email).toLowerCase());
+    }
+    em.addEventListener('input',()=>{
+        if(validateEmail(em.value)){
+            em.className = "form-control is-valid";
+            eIsValid = true;
+        }
+        else if(em.value == ""){
+            em.className = "form-control";
+            eIsValid = false;
+        }
+        else{
+            em.className = "form-control is-invalid";
+            eIsValid = false;
+        }
+    })
+    cpw.addEventListener('input',()=>{
+        if(pw.value == cpw.value){
+            pw.className ='form-control is-valid';
+            cpw.className = 'form-control is-valid';
+            pIsValid = true;
+        }
+        else if(cpw.value == ""){
+            pw.className ='form-control';
+            cpw.className = 'form-control';
+            pIsValid = false;
+        }
+        else{
+            pw.className ='form-control is-invalid';
+            cpw.className = 'form-control is-invalid';
+            pIsValid = false;
+        }
+    })
+    function checkUser(){
+      if(!eIsValid && !pIsValid){
+          alert("unvalid email or password");
+      }
+      else{
+        users.forEach(e => {
+          if(e.username == un.value && e.email == em.value && e.password == cpw.value){
+            window.location.replace("home.html");
+            return;
+          }
+          })
+      }
+    }
+    sign.addEventListener("click",checkUser);
+</script>
+</html>
